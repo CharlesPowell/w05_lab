@@ -55,36 +55,37 @@ end
 
 get '/api/users/:user_id/chirps' do
     content_type :json
-    chirps = Chirp.find(params[:user_id])
+    chirps = Chirp.find_by(user_id: params[:user_id])
     chirps.to_json
 end
 
 get '/api/users/:user_id/chirps/:id' do
     content_type :json
-    chirps = Chirp.find(params[:user_id])
-    the_chirp = chirps.find[:id]
-    the_chirp.to_json
+    chirp = Chirp.find(params[:id])
+    chirp.to_json
 end
 
 post '/api/users/:user_id/chirps' do
     content_type :json
     chirp = Chirp.create(params[:chirp])
+    user = User.find(params[:user_id])
+    #user.chirps << chirp
     chirp.to_json
 end
 
 put '/api/users/:user_id/chirps/:id' do
-    content_type :json
-    chirps = Chirp.find[params[:user_id]]
-    chirps.update(params[:chirp])
-    chirps.to_json
+  content_type :json
+  chirp = Chirp.find(params[:id])
+  chirp.update(params[:chirp])
+  chirp.to_json
 
 end
 
 patch '/api/users/:user_id/chirps/:id' do
     content_type :json
-    chirps = Chirp.find[params[:user_id]]
-    chirps.update(params[:chirp])
-    chirps.to_json
+    chirp = Chirp.find(params[:id])
+    chirp.update(params[:chirp])
+    chirp.to_json
 end
 
 delete '/api/users/:user_id/chirps/:id' do
